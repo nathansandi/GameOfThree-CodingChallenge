@@ -13,6 +13,7 @@ import javax.xml.validation.Validator;
 
 import com.gameofthree.GameServer;
 import com.gameofthree.controller.GameModeController;
+import com.gameofthree.model.HumanGame;
 import com.gameofthree.model.Player;
 import com.gameofthree.threads.PlayerInputManagement;
 import com.gameofthree.threads.PlayerSetUp;
@@ -51,23 +52,14 @@ public class PlayerInput {
 			OutputStream output = socket.getOutputStream();
 			System.out.println("Status - " +status);
 			do {
-				playerAction = reader.readLine();
-				//Validate input 1,0,-1
-				if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
-					isValid=false;
-					server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
-				}else if(player.getName()!=server.getGame().getState()){
-					isValid=false;
-					server.broadcastTo("Not your turn, you must wait", thread);
-				}
-				else if(!validate.validate(currentNumber+Integer.parseInt(playerAction))){
-					isValid=false;
-					server.broadcastTo("Invalid input, not divisible by 3", thread);
-				}else {
-					isValid=true;
-				}
-				//Valida if is divisible peer 3
 				
+				playerAction = reader.readLine();
+				if(server.getGame()!=null) {
+					isValid=validateMultiplePlayerGame( playerAction,  thread,  player);
+				}else {
+					isValid= validateSinglePlayerGame( playerAction,  thread,  player,  currentNumber);
+				}
+
 			}while(!isValid);
 				
 			}catch (IOException ex) {
@@ -78,12 +70,45 @@ public class PlayerInput {
 		return playerAction;
 	
 	 }
-
 	
-	  public void sendMessage(String message) {
-	        writer.println(message);
-	  }
-	  
+	public boolean validateMultiplePlayerGame(String playerAction, PlayerSetUp thread, Player player) {
+		boolean isValid=false;
+		if(!server.getGame().isWin()) {
+			if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
+				isValid=false;
+				server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
+			}else if(player.getName()!=server.getGame().getState()){
+				isValid=false;
+				server.broadcastTo("Not your turn, you must wait", thread);
+			}
+			else if((server.getGame().getNumerPlayed()+Integer.parseInt(playerAction))%3!=0){
+				isValid=false;
+				server.broadcastTo("Invalid input, not divisible by 3", thread);
+			}else {
+				isValid=true;
+			}
+			return isValid;
+		}else {
+			server.broadcastTo("Game finished - You win!", thread);
+			isValid=true;
+		}
+		return isValid;
+	}
+	
+	public boolean validateSinglePlayerGame(String playerAction, PlayerSetUp thread, Player player, int currentNumber) {
+		boolean isValid=false;
+		if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
+			isValid=false;
+			server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
+		}
+		else if(!validate.validate(currentNumber+Integer.parseInt(playerAction))){
+			isValid=false;
+			server.broadcastTo("Invalid input, not divisible by 3", thread);
+		}else {
+			isValid=true;
+		}
+		return isValid;
+	}
 
 	
 	

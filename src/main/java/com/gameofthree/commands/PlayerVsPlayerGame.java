@@ -59,37 +59,36 @@ public class PlayerVsPlayerGame{
 			}
 		}
 		//Ready to interact 		
-		
+		server.broadcastTo("****NEW GAME STARTED***", thread);
 		server.broadcastTo("Number Generated " +humanGame.getNumerPlayed()+ "// player " +humanGame.getState()+ " starts" ,thread);
-		
 		while(!humanGame.isWin()) {
 			//Get Game updated 
 	
 			humanGame = server.getGame();
 			//Get data from the game 		
 			System.out.println("Human game - "+humanGame);
-			
-					
+	
 			//Read player input
 			PlayerInput playerTurn = new PlayerInput(socket,server);
-			int playerMove =Integer.parseInt(playerTurn.run(player,thread,input,humanGame.getState()));
-			System.out.println("**HIS MOVE WAS - "+playerMove);
+			String receivePlayerMove = playerTurn.run(player,thread,humanGame.getNumerPlayed(),humanGame.getState());
 
-			//Set output
-			humanGame.setOutput(playerMove);	
-			//Set new Number after divide
-			humanGame.setNumerPlayed(setNewNumber.sendOutput(playerMove+humanGame.getNumerPlayed()));
+			if(!server.getGame().isWin()) {
+				int playerMove = Integer.parseInt(receivePlayerMove);
+				//Set output
+				humanGame.setOutput(playerMove);	
+				//Set new Number after divide
+				humanGame.setNumerPlayed(setNewNumber.sendOutput(playerMove+humanGame.getNumerPlayed()));
 				
-			//Wake up second thread and change turn				
-			server.broadcast(" Player: "+player.getName()+" // played: " +humanGame.getNumerPlayed()+ " // result: " +playerMove+ " // winner status is: "+humanGame.isWin(), thread);
-			
-			if(!humanGame.isWin()) {
-					server.broadcast("Sent to another player, wait for his move!",thread);
-					
+				server.broadcast("***Turn Results***",thread);
+				//Wake up second thread and change turn		
+				
+				
+				//Send to Server process the turn 
+				humanGame = server.gameLogic(humanGame);
+				server.broadcast(" Player : "+player.getName()+" // Number received: " +humanGame.getNumerPlayed()+ " // Last round output: " +humanGame.getOutput() + "// win: "+humanGame.isWin(),thread);
+	
+				
 			}
-			//Send to Server process the turn 
-			humanGame = server.gameLogic(humanGame);
-
 		}
 		
 		

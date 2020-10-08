@@ -130,7 +130,7 @@ public class GameServer {
 		}else {
 			humanGame.setState(players.get(0).getName());
 		}	
-    	System.out.println("STATUS CHANGED -> " + humanGame.getState());
+    	
     	
     	return humanGame;    	
     }    

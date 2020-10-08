@@ -58,7 +58,8 @@ public class PlayerVsMachineGame {
 			if(status == player.getName()) {
 				
 				PlayerInput playerTurn = new PlayerInput(socket,server);
-				numberPlayerd =Integer.parseInt(playerTurn.run(player,thread,input,status));
+				String readPlay= playerTurn.run(player,thread,input,status);
+				numberPlayerd =Integer.parseInt(readPlay);
 				input = input+numberPlayerd;
 			}
 			//In case of Bot 
