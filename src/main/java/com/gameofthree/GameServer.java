@@ -83,12 +83,10 @@ public class GameServer {
     }
 
 	public boolean checkPlayersConnections() {
-		//System.out.println("Players connecteds_ - "+players.size()  );
 		if(players.size() == 2) {
 			return true;
 		}
-		return false;
-	        
+		return false;      
 	}  
     
 	public void addPlayer(Player player) {
