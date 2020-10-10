@@ -11,7 +11,7 @@ import com.gameofthree.model.Bot;
 import com.gameofthree.model.Player;
 import com.gameofthree.threads.PlayerSetUp;
 import com.gameofthree.threads.PlayerInputManagement;
-import com.gameofthree.validator.isDivisibleOfThree;
+
 
 public class BotVsBotGame {
 	private Socket socket; 
@@ -25,7 +25,7 @@ public class BotVsBotGame {
 	}
 	
 	public void StartNewBotGame(PlayerSetUp thread) {
-		
+
 		//Current Status
 		WinnerOutput winnerCheck = new WinnerOutput();
 		
@@ -57,15 +57,12 @@ public class BotVsBotGame {
 			//Print the reuslt
 			server.broadcastTo(" Machine: "+status+" // played: " +numberPlayerd+ " // result: " +input+ " // winner status is: "+win, thread);
 			
-			//Muda o Status
+			//Muda o Status			
+			updateStatus(botOne.getName(), botTwo.getName());
 			
-			if(status == botOne.getName()) {
-				status = botTwo.getName();
-			}else {
-				status = botOne.getName();
-			}	
 			//Divide by 3
 			input = botNewOutput.sendOutput(input);
+			
 			//Checa se é winnable
 			win = winnerCheck.isWin(input);
 			if(win) { 
@@ -75,5 +72,13 @@ public class BotVsBotGame {
 		}
 		
 	}
+	public void updateStatus(String bot1, String bot2) {
+		if(status == bot1) {
+			status = bot2;
+		}else {
+			status = bot1;
+		}	
+		
+	};
 	
 }

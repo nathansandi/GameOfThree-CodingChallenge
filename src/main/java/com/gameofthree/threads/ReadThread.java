@@ -11,20 +11,15 @@ import java.util.stream.Stream;
 import com.gameofthree.GameClient;
 import com.gameofthree.model.Player;
 
-//* This thread is gonna be used when 2 players are interacting */
-
-//* Thread responsable to read server input and printing it to the console to the players ** // 
-
 public class ReadThread extends Thread {
 	private BufferedReader reader; 
 	private Socket socket;
 	private GameClient client;
 	private Player player;
 	
-	public ReadThread(Socket socket, GameClient client, Player player) {
+	public ReadThread(Socket socket, GameClient client) {
 		this.socket = socket;
 		this.client = client;
-		this.player = player;
 	
 		try {
 			InputStream input =  socket.getInputStream();

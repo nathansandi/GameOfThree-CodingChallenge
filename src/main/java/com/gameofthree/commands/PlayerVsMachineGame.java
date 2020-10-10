@@ -12,7 +12,8 @@ import com.gameofthree.model.Bot;
 import com.gameofthree.model.Player;
 import com.gameofthree.threads.PlayerSetUp;
 import com.gameofthree.threads.PlayerInputManagement;
-import com.gameofthree.validator.isDivisibleOfThree;
+
+
 
 public class PlayerVsMachineGame {
 	private Socket socket; 
@@ -88,7 +89,7 @@ public class PlayerVsMachineGame {
 			
 
 		}
- 	   	new Exit(server, socket).quitGame(thread,player);
+ 	  
 		
 	}
 	

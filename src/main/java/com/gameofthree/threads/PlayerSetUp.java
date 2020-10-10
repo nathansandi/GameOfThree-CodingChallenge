@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import com.gameofthree.GameServer;
 import com.gameofthree.controller.GameModeController;
@@ -40,22 +41,24 @@ public class PlayerSetUp extends Thread{
 			OutputStream output = socket.getOutputStream();
 			writer = new PrintWriter(output, true);
 			
-			
+		
 			//Read the player Name 
 			String playerName= reader.readLine();
 			Player currentPlayer = new Player(playerName);
 			
 			
-			//Read the game mode 
+			//Read the game mode 			
+			while(true){
+				in= reader.readLine();	
+			    GameModeController gameStart = new GameModeController(socket, server);
+			    gameStart.gameModeStarter(in, this, currentPlayer); 
+			    if(in=="1" || in=="2" || in=="3" || in=="Quit") {
+			    	break;
+			    }
+			}
 			
-			in= reader.readLine();	
-		    GameModeController gameStart = new GameModeController(socket, server);
-		    gameStart.gameModeStarter(in, this, currentPlayer); 
-		    
-
 			}catch (IOException ex) {
 	                System.out.println("Error in PlayerThread: " + ex.getMessage());
-	                ex.printStackTrace();
 	        }
 	
 		}

@@ -1,23 +1,17 @@
 package com.gameofthree.gamelogic;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
-import javax.xml.validation.Validator;
 
 import com.gameofthree.GameServer;
-import com.gameofthree.controller.GameModeController;
-import com.gameofthree.model.HumanGame;
+import com.gameofthree.exceptions.GameExceptionHandler;
+import com.gameofthree.exceptions.GameGeneralException;
+import com.gameofthree.exceptions.GameTurnException;
+import com.gameofthree.exceptions.GameValidationException;
 import com.gameofthree.model.Player;
-import com.gameofthree.threads.PlayerInputManagement;
 import com.gameofthree.threads.PlayerSetUp;
-import com.gameofthree.validator.isDivisibleOfThree;
+
 
 public class PlayerInput {
 	
@@ -25,12 +19,10 @@ public class PlayerInput {
 	private GameServer server;
 	private PrintWriter writer;
 	Console console = System.console();
-	isDivisibleOfThree validate=new isDivisibleOfThree();
 
 	public PlayerInput(Socket socket, GameServer server) {
 		this.socket=socket;
 		this.server=server;
-
 	}
 	
 	@Override
@@ -41,16 +33,9 @@ public class PlayerInput {
 	public String run(Player player, PlayerSetUp thread, int currentNumber, String status) {
 		String playerAction="";
 		boolean isValid =true;
-		try {
-			
+		try {			
 			InputStream input = socket.getInputStream();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(input));		
-			//clean all
-			//reader.read();
-			 
-			OutputStream output = socket.getOutputStream();
-			System.out.println("Status - " +status);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(input));				
 			do {
 				
 				playerAction = reader.readLine();
@@ -73,17 +58,19 @@ public class PlayerInput {
 	
 	public boolean validateMultiplePlayerGame(String playerAction, PlayerSetUp thread, Player player) {
 		boolean isValid=false;
+		
 		if(!server.getGame().isWin()) {
-			if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
+			if(player.getName()!=server.getGame().getState()){
 				isValid=false;
-				server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
-			}else if(player.getName()!=server.getGame().getState()){
-				isValid=false;
-				server.broadcastTo("Not your turn, you must wait", thread);
+				new GameExceptionHandler(socket, server).handleException(new GameTurnException("Not your turn, wait...!"), thread);
 			}
-			else if((server.getGame().getNumerPlayed()+Integer.parseInt(playerAction))%3!=0){
+			else if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
 				isValid=false;
-				server.broadcastTo("Invalid input, not divisible by 3", thread);
+				new GameExceptionHandler(socket, server).handleException(new GameGeneralException("Invalid input, must be in -1,0 or 1"), thread);
+			}
+			else if(!isDivisibleBy.isDivisibleBy3(server.getGame().getNumerPlayed()+Integer.parseInt(playerAction))){
+				isValid=false;		
+				new GameExceptionHandler(socket, server).handleException(new GameValidationException("Result is not divisible by 3"), thread);
 			}else {
 				isValid=true;
 			}
@@ -99,11 +86,12 @@ public class PlayerInput {
 		boolean isValid=false;
 		if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){
 			isValid=false;
-			server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
+			//server.broadcastTo("Invalid input, must be in -1,0 or 1", thread);
+			new GameExceptionHandler(socket, server).handleException(new GameGeneralException("Invalid input, must be in -1,0 or 1"), thread);
 		}
-		else if(!validate.validate(currentNumber+Integer.parseInt(playerAction))){
+		else if(!isDivisibleBy.isDivisibleBy3(currentNumber+Integer.parseInt(playerAction))){
 			isValid=false;
-			server.broadcastTo("Invalid input, not divisible by 3", thread);
+			new GameExceptionHandler(socket, server).handleException(new GameValidationException("Result is not divisible by 3"), thread);
 		}else {
 			isValid=true;
 		}

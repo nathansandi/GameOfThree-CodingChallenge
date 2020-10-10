@@ -1,12 +1,7 @@
 package com.gameofthree.gamelogic;
 
 
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Random;
 
-import com.gameofthree.utils.PropertiesConfig;
-import com.gameofthree.validator.isDivisibleOfThree;
 
 public class GenerateActionBotInput{
 

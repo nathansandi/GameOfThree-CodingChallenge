@@ -1,21 +1,10 @@
 package com.gameofthree.commands;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
+import java.net.Socket;
 import com.gameofthree.GameServer;
-import com.gameofthree.gamelogic.GenerateStartNumber;
 import com.gameofthree.gamelogic.PlayerInput;
 import com.gameofthree.gamelogic.PlayersOutput;
-import com.gameofthree.gamelogic.WinnerOutput;
 import com.gameofthree.model.HumanGame;
 import com.gameofthree.model.Player;
 import com.gameofthree.threads.PlayerSetUp;
@@ -25,10 +14,6 @@ public class PlayerVsPlayerGame{
 	private Socket socket; 
 	private GameServer server;
 	int i = 0 ;
-	private ArrayList<Player> players = new ArrayList<>(); 
-    private BufferedReader in;
-    private PrintWriter out;
-	private int GeneratedNumber;
 	String status;
 	int input=0;
 	int output;
@@ -74,17 +59,14 @@ public class PlayerVsPlayerGame{
 
 			if(!server.getGame().isWin()) {
 				int playerMove = Integer.parseInt(receivePlayerMove);
-				//Set output
+				//Set output - Divide nymber by 3
 				humanGame.setOutput(playerMove);	
 				//Set new Number after divide
-				humanGame.setNumerPlayed(setNewNumber.sendOutput(playerMove+humanGame.getNumerPlayed()));
-				
-				server.broadcast("***Turn Results***",thread);
-				//Wake up second thread and change turn		
-				
-				
+				humanGame.setNumerPlayed(setNewNumber.sendOutput(playerMove+humanGame.getNumerPlayed()));				
+				server.broadcast("***Turn Results***",thread);				
 				//Send to Server process the turn 
-				humanGame = server.gameLogic(humanGame);
+				humanGame = server.gameLogic(humanGame);				
+				//Show the results
 				server.broadcast(" Player : "+player.getName()+" // Number received: " +humanGame.getNumerPlayed()+ " // Last round output: " +humanGame.getOutput() + "// win: "+humanGame.isWin(),thread);
 	
 				

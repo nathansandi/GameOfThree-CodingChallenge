@@ -26,25 +26,23 @@ public class GameModeController {
            case "1":
         	   System.out.println("***Starting Bot vs Bot mode***");
         	   new BotVsBotGame(socket,server).StartNewBotGame(playerSetUp);
-        	   //Quit the game
-        	   new Exit(server, socket).quitGame(playerSetUp,Player);
+       	 	   new Exit(server, socket).quitGame(playerSetUp,Player);
                break;
            case "2":
         	   System.out.println("***Starting Human vs Bot mode***");
         	   new PlayerVsMachineGame(socket,server).StartNewBotGame(playerSetUp, Player);
+        	   new Exit(server, socket).quitGame(playerSetUp,Player);
         	   break;
            case "3":
         	   System.out.println("***Starting Human vs Human mode***");
 			   new PlayerVsPlayerGame(socket,server).StartNewPlayerVsPlayerGame(playerSetUp, Player);
-			   //Quit the game
 			   new Exit(server, socket).quitGame(playerSetUp,Player);
-           break;
+			   break;
            case "Quit":
-        	   
         	   new Exit(server, socket).quitGame(playerSetUp,Player);
         	   break;
            default:
-               System.out.println("Invalid Mode");
+               server.broadcastTo("Invalid Mode", playerSetUp);
        }
 	}
 	

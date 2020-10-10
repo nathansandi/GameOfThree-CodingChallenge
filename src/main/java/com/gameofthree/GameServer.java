@@ -1,14 +1,12 @@
 package com.gameofthree;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.gameofthree.gamelogic.GenerateStartNumber;
 import com.gameofthree.gamelogic.WinnerOutput;
@@ -24,7 +22,7 @@ public class GameServer {
 	private static int port = Integer.parseInt(PORT);
 	private ArrayList<Player> players = new ArrayList<>();
 	private Set<PlayerSetUp> playerSetUp = new HashSet<>();
-
+	private static final AtomicInteger nameCounter = new AtomicInteger(1);
 
 	HumanGame humanGame;
 
@@ -41,16 +39,12 @@ public class GameServer {
 		try(ServerSocket serverSocket = new ServerSocket(port)){
 			System.out.println("Server is runing and listening the port "+port);
 			
-			while(true) {
-				if(playerSetUp.size() < Integer.parseInt(MAX_CON)){
+			while(playerSetUp.size() < Integer.parseInt(MAX_CON)) {
 					Socket socket = serverSocket.accept();
-					System.out.println("New user connected");
-					
+					System.out.println("New user connected");					
 					PlayerSetUp newPlayer = new PlayerSetUp(socket,this);
-					playerSetUp.add(newPlayer);
+					playerSetUp.add(newPlayer);					
 					newPlayer.start();
-				}
-					
 			}
 			
 		} catch (IOException e) {
@@ -81,7 +75,8 @@ public class GameServer {
             }
         }
     }
-
+    
+    //Check if there are 2 players connected in the server
 	public boolean checkPlayersConnections() {
 		if(players.size() == 2) {
 			return true;
@@ -98,9 +93,9 @@ public class GameServer {
 	public void removePlayer(Player playerToRemove, PlayerSetUp playerThreadRemove) {
 		boolean  removed=false;
 		System.out.println("players "+players.toString());
+
 		for(int i = 0 ; i<players.size();i++) {
-			if(players.get(i).getName() == playerToRemove.getName())
-				
+			if(players.get(i).getName() == playerToRemove.getName())	
 				if(players.remove(players.get(i))) {
 					removed=true;
 				}
@@ -153,7 +148,7 @@ public class GameServer {
     	
     }
     
-   
+
     public static void main(String[] args) {    
     	//Start server in the port 
         GameServer server = new GameServer(port);    
