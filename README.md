@@ -37,12 +37,12 @@ Enter the player name:Test
  [2] - Player vs BOT
  [3] - 2 Players (2 players must be connected)
  Or Type Quit to exit.
+ ``` 
  
- 
- Game mode 1 - Automatic game
- Game mode 2 - Player vs Bot Game
- Game mode 3 - Multi player Game
-``` 
+ -Game mode 1 - Automatic game
+ -Game mode 2 - Player vs Bot Game
+ -Game mode 3 - Multi player Game
+
  Example: Game mode 1
  ```
   Now, chose one of options to start:
@@ -110,3 +110,89 @@ ERROR: Result is not divisible by 3
 Game finised, type Quit to exit
 Quit
 ```
+
+Example: Game mode 3
+
+**Terminal 1**
+
+```
+*** Connected to the game server ***
+Welcome to the Game of Three
+Enter the player name:Test 1
+
+ Now, chose one of options to start:
+ [1] - BOT vs BOT
+ [2] - Player vs BOT
+ [3] - 2 Players (2 players must be connected)
+ Or Type Quit to exit.3
+
+Waiting for the new player.
+
+****NEW GAME STARTED***
+
+Number Generated 329// player Test 1 starts
+1
+
+***Turn Results***
+
+ Player : Test 2 // Number received: 37 // Last round output: 1// win: false
+0
+
+ERROR: Result is not divisible by 3
+-1
+
+***Turn Results***
+
+ Player : Test 2 // Number received: 4 // Last round output: 0// win: false
+1
+
+ERROR: Result is not divisible by 3
+-1
+
+Game finised, type Quit to exit
+```
+
+**Terminal 2**
+```
+Welcome to the Game of Three
+Enter the player name:Test 2
+
+ Now, chose one of options to start:
+ [1] - BOT vs BOT
+ [2] - Player vs BOT
+ [3] - 2 Players (2 players must be connected)
+ Or Type Quit to exit.3
+
+Waiting for the new player.
+
+****NEW GAME STARTED***
+
+Number Generated 329// player Test 1 starts
+0
+
+ERROR: Not your turn, wait...!
+
+***Turn Results***
+
+ Player : Test 1 // Number received: 110 // Last round output: 1// win: false
+1
+
+***Turn Results***
+
+ Player : Test 1 // Number received: 12 // Last round output: -1// win: false
+1
+
+ERROR: Result is not divisible by 3
+0
+
+***Turn Results***
+
+ Player : Test 1 // Number received: 1 // Last round output: -1// win: true
+
+
+Game finished - You win!
+
+Game finised, type Quit to exit
+
+```
+
