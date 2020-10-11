@@ -60,7 +60,6 @@ public class PlayerVsMachineGame {
 		
 		//Round
 		while(!win) {
-			server.broadcastTo("******TURN : "+status+" Play 1,0 or -1******",thread);
 			//Opening thread for the round
 			if(status == player.getName()) {
 				
