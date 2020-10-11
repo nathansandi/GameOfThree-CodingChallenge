@@ -39,9 +39,9 @@ Enter the player name:Test
  Or Type Quit to exit.
  ``` 
  
- -Game mode 1 - Automatic game
- -Game mode 2 - Player vs Bot Game
- -Game mode 3 - Multi player Game
+ - Game mode 1 - Automatic game
+ - Game mode 2 - Player vs Bot Game
+ - Game mode 3 - Multi player Game
 
  Example: Game mode 1
  ```
