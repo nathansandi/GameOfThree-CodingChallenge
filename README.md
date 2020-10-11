@@ -66,3 +66,47 @@ Game Mode Bot vs Bot - Started, the number generated is: 36
 Game finised, type Quit to exit
 Quit
 ```
+
+Example: Game mode 2
+```
+Welcome to the Game of Three
+Enter the player name:Test
+
+ Now, chose one of options to start:
+ [1] - BOT vs BOT
+ [2] - Player vs BOT
+ [3] - 2 Players (2 players must be connected)
+ Or Type Quit to exit.2
+
+Game Mode Bot vs Test - Started, the number generated is: 108
+1
+
+ERROR: Result is not divisible by 3
+-1
+
+ERROR: Result is not divisible by 3
+0
+
+ Player : Test // played: 0 // result: 108
+
+ Player: BOT 2 //  received: 36 // winner status is: false
+
+ Player : BOT 2 // played: 0 // result: 36
+
+ Player: Test //  received: 12 // winner status is: false
+1
+
+ERROR: Result is not divisible by 3
+0
+
+ Player : Test // played: 0 // result: 12
+
+ Player: BOT 2 //  received: 4 // winner status is: false
+
+ Player : BOT 2 // played: -1 // result: 3
+
+ Winner: Test //  result: 1 // winner status is: true
+
+Game finised, type Quit to exit
+Quit
+```
