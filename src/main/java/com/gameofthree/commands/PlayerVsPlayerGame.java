@@ -24,8 +24,14 @@ public class PlayerVsPlayerGame{
 		this.server = server;
 
 	}
-	
-	public synchronized  void StartNewPlayerVsPlayerGame(PlayerSetUp thread, Player player) {
+    /**
+     * Method startNewPlayerVsPlayerGame
+     * Starts a new multipayer game, important that is necessary have 2 players to proccess the method
+     * 
+     * @param thread, player
+     * 
+     */
+	public synchronized  void startNewPlayerVsPlayerGame(PlayerSetUp thread, Player player) {
 		
 		PlayersOutput setNewNumber = new PlayersOutput();
 		System.out.println("**connected -  player: " + player.getName() + " Na thread "+thread.getName());

@@ -53,13 +53,25 @@ public class GameServer {
 		}
 		
 	}
-	//Return players
+    /**
+     * Method getAllPlayers
+     * Methods to return all active players
+     * 
+     * @return players
+     * 
+     */
 	public ArrayList<Player> getAllPlayers() {
 		return players;
 	}
 	
 	
-	//Broadcast to all users
+    /**
+     * Method broadcast, broadcastTo
+     * Methods to send message from the server to the players
+     * 
+     * @param message, player
+     * 
+     */
     public void broadcast(String message, PlayerSetUp excludeUser) {
 	        for (PlayerSetUp aPlayer : playerSetUp) {
 	            if (aPlayer != excludeUser) {
@@ -67,7 +79,6 @@ public class GameServer {
 	            }
 	        }
 	}
-    //Mesasge to specific user 
     public void broadcastTo(String message, PlayerSetUp User) {
         for (PlayerSetUp aPlayer : playerSetUp) {
             if (aPlayer == User) {
@@ -83,13 +94,24 @@ public class GameServer {
 		}
 		return false;      
 	}  
-    
+    /**
+     * Method addPlayer
+     * Add player to the list of players in case of any player game mode
+     * 
+     * @param playerToRemove
+     * 
+     */
 	public void addPlayer(Player player) {
 		players.add(player);
 	        
 	}  
-	
-	//Remove player thread + player from the list of players 
+    /**
+     * Method removePlayer
+     * Remove player and active thread from the list
+     * 
+     * @param playerToRemove - Player model to remove // playerThreadRemove - Thread to remove
+     * 
+     */
 	public void removePlayer(Player playerToRemove, PlayerSetUp playerThreadRemove) {
 		boolean  removed=false;
 		System.out.println("players "+players.toString());
@@ -110,7 +132,14 @@ public class GameServer {
     boolean hasUsers() {
         return !this.players.isEmpty();
     }
-    //Logic - Human Game 
+    
+    /**
+     * Method gameLogic 
+     * Method to update multiplayer game status
+     * 
+     * @param playerMove - humanGame with the data of player turn
+     * @return humanGame updated
+     */
     public synchronized HumanGame gameLogic(HumanGame playerMove) {
     	WinnerOutput winnerCheck = new WinnerOutput();
     	humanGame = playerMove;
@@ -127,12 +156,23 @@ public class GameServer {
     	
     	return humanGame;    	
     }    
-    //Get Game State
+    /**
+     * Method getGame
+     * 
+     * @Return multiplayer game running on the server.
+     * 
+     */
     public HumanGame getGame() {		  	
     	return humanGame;    	
     }
     
-    //Setup a new human game
+    /**
+     * Method newGame.
+     * Start client threads. Restrictions: If there are more than 2 players, server will close the socket for the 3rd player.
+     * 
+     * @param player 
+     * @Return new multiplayer game
+     */
     public HumanGame newGame(Player player) {
 		//Configure when the first play connect    	
     	if(players.size() == 1) {

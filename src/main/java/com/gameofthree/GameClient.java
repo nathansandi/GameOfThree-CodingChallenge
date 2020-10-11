@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.gameofthree.model.Player;
 import com.gameofthree.threads.ReadThread;
 import com.gameofthree.utils.PropertiesConfig;
 import com.gameofthree.threads.PlayerInputManagement;
@@ -30,9 +29,11 @@ public class GameClient {
 
 	}
 	
-	/* -- Method to try create the connection with the server, in case of fail 
- 		  the exceptions will be showed in the terminal        -- */
-	
+    /**
+     * Client class - Start game.
+     * Start client threads. Restrictions: If there are more than 2 players, server will close the socket for the 3rd player.
+     * 
+     */
 	public void execute() {
 		try{				
 				Socket socket = new Socket(hostName, port);				
@@ -57,7 +58,7 @@ public class GameClient {
 	}
 	
 	private static void initConfigLoader() {
-		//Initialize Global Config 
+		//Initialize properties 
     	PropertiesConfig.initialize("application.properties");
 	}
 

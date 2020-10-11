@@ -25,8 +25,14 @@ public class PlayerVsMachineGame {
 		this.server = server;
 
 	}
-	
-	public void StartNewBotGame(PlayerSetUp thread, Player player) {
+    /**
+     * Method startNewSinglePlayerGame
+     * Methods to start a player game against bot
+     * 
+     * @param player, thread
+     * 
+     */
+	public void startNewSinglePlayerGame(PlayerSetUp thread, Player player) {
 		
 		
 		//Add myself as a player
@@ -43,7 +49,7 @@ public class PlayerVsMachineGame {
 		Bot botOne = new Bot("BOT").generateName();
 	
 		
-		System.out.println("Bots Gerados - iniciando random");
+		System.out.println("Bot Generated - Starting the game");
 		
 		//GeneratNumber 
 		GenerateStartNumber startNumber = new GenerateStartNumber();
@@ -71,7 +77,7 @@ public class PlayerVsMachineGame {
 			
 			server.broadcastTo(" Player : "+status+" // played: " +numberPlayerd+ " // result: " +input,thread);
 			
-			//Muda o Status
+			//Change status
 			if(status == botOne.getName()) {
 				status = player.getName();
 			}else {

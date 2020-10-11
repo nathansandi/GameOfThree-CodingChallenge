@@ -29,7 +29,15 @@ public class PlayerInput {
 	public String toString() {
 		return "PlayerThread [socket=" + socket + ", server=" + server + ", writer=" + writer + "]";
 	}
-
+	
+    /**
+     * Method run
+     * Manage the player input, turns and validation in case of game mode that involve human players
+     * 
+     * @param player, thread, currentNumber, status
+     * @return playerAtion 
+     * 
+     */
 	public String run(Player player, PlayerSetUp thread, int currentNumber, String status) {
 		String playerAction="";
 		boolean isValid =true;
@@ -55,7 +63,14 @@ public class PlayerInput {
 		return playerAction;
 	
 	 }
-	
+    /**
+     * Method validateMultiplePlayerGame
+     * Validations for multiplayer player game
+     * 
+     * @param playerAction, thread, player
+     * @return true if is valid, false if is not
+     * 
+     */
 	public boolean validateMultiplePlayerGame(String playerAction, PlayerSetUp thread, Player player) {
 		boolean isValid=false;
 		
@@ -81,7 +96,14 @@ public class PlayerInput {
 		}
 		return isValid;
 	}
-	
+    /**
+     * Method validateSinglePlayerGame
+     * Validations for single player game
+     * 
+     * @param playerAction, thread, player
+     * @return true if is valid, false if is not
+     * 
+     */
 	public boolean validateSinglePlayerGame(String playerAction, PlayerSetUp thread, Player player, int currentNumber) {
 		boolean isValid=false;
 		if(!(playerAction.equals("-1") || playerAction.equals("1") || playerAction.equals("0"))){

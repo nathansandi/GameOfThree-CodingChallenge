@@ -20,22 +20,28 @@ public class GameModeController {
 		this.socket = socket;
 		this.server = server;
 	}
-	
+    /**
+     * Method gameModeStarter
+     * Menu controller
+     * 
+     * @param gameMode,thread(PlayerSetUp), player
+     * 
+     */ 
 	public void gameModeStarter(String gameMode, PlayerSetUp playerSetUp, Player Player){
 		   switch (gameMode) {
            case "1":
         	   System.out.println("***Starting Bot vs Bot mode***");
-        	   new BotVsBotGame(socket,server).StartNewBotGame(playerSetUp);
+        	   new BotVsBotGame(socket,server).startNewBotGame(playerSetUp);
        	 	   new Exit(server, socket).quitGame(playerSetUp,Player);
                break;
            case "2":
         	   System.out.println("***Starting Human vs Bot mode***");
-        	   new PlayerVsMachineGame(socket,server).StartNewBotGame(playerSetUp, Player);
+        	   new PlayerVsMachineGame(socket,server).startNewSinglePlayerGame(playerSetUp, Player);
         	   new Exit(server, socket).quitGame(playerSetUp,Player);
         	   break;
            case "3":
         	   System.out.println("***Starting Human vs Human mode***");
-			   new PlayerVsPlayerGame(socket,server).StartNewPlayerVsPlayerGame(playerSetUp, Player);
+			   new PlayerVsPlayerGame(socket,server).startNewPlayerVsPlayerGame(playerSetUp, Player);
 			   new Exit(server, socket).quitGame(playerSetUp,Player);
 			   break;
            case "Quit":

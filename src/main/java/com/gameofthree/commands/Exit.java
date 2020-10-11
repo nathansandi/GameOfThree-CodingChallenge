@@ -6,13 +6,12 @@ import java.net.Socket;
 import com.gameofthree.GameServer;
 import com.gameofthree.model.Player;
 import com.gameofthree.threads.PlayerSetUp;
-import com.gameofthree.threads.ReadThread;
+
 
 public class Exit {
 		
 	//Exit the application and remove player from the thread
 	private GameServer server;
-	private PlayerSetUp thread;
 	private Socket socket;
 
 	
@@ -21,6 +20,14 @@ public class Exit {
 		this.server = server;
 	}
 	
+	
+    /**
+     * Method quitGame
+     * Methods to close the sockets and remove player of the game
+     * 
+     * @param player, thread
+     * 
+     */
 	public void quitGame(PlayerSetUp thread, Player player) {
         try {
         	//Send a Message to the server in order to stop listen the Read Thread channel

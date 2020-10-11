@@ -29,7 +29,10 @@ public class PlayerInputManagement extends Thread{
 	            ex.printStackTrace();
 	        }
 	    }
-	 
+		/**
+		 * Thread - playerInputManagement
+		 * Thread to manage player input in terminal on game client
+		 */
 	    public void run() {
 	    	String gameMode ="";
 	    	String readConsoleGeneral="";

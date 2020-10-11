@@ -24,7 +24,15 @@ public class BotVsBotGame {
 
 	}
 	
-	public void StartNewBotGame(PlayerSetUp thread) {
+    /**
+     * Method StartNewBotGame
+     * Methods to start an automatic game.
+     * 
+     * @param thread - thread of active client
+     * 
+     */
+	
+	public void startNewBotGame(PlayerSetUp thread) {
 
 		//Current Status
 		WinnerOutput winnerCheck = new WinnerOutput();
@@ -37,7 +45,7 @@ public class BotVsBotGame {
 		Bot botOne = new Bot("BOT").generateName();
 		Bot botTwo = new Bot("BOT").generateName();
 		
-		System.out.println("Bots Gerados - iniciando random");
+		System.out.println("Bots ready - Starting the game");
 		
 		//GeneratNumber 
 		GenerateStartNumber startNumber = new GenerateStartNumber();
@@ -72,6 +80,13 @@ public class BotVsBotGame {
 		}
 		
 	}
+	 /**
+     * Method updateStatus
+     * Update the status of bot game
+     * 
+     * @param bot1, bot2 
+     * 
+     */
 	public void updateStatus(String bot1, String bot2) {
 		if(status == bot1) {
 			status = bot2;

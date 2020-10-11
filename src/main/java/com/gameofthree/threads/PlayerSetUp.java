@@ -30,7 +30,10 @@ public class PlayerSetUp extends Thread{
 	public String toString() {
 		return "PlayerThread [socket=" + socket + ", server=" + server + ", writer=" + writer + "]";
 	}
-
+	/**
+	 * Thread - player Set Up
+	 * Thread to manage player set up inputs.
+	 */
 	public void run() {
 		try {
 			String in="";
@@ -65,18 +68,6 @@ public class PlayerSetUp extends Thread{
 
 	  public void sendMessage(String message) {
 	        writer.println(message);
-	  }
-	  private void sleep() {
-		  try {
-			Thread.currentThread().wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	  }
-	  
-	  private void notifyTh() {	
-			Thread.currentThread().notify();
 	  }
 
 }
